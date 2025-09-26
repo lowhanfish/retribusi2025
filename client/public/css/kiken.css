@@ -40,7 +40,8 @@ table, td, th {
 
 
   .bgku{ 
-    background: url('https://img.freepik.com/free-photo/top-view-desk-concept-with-laptop_23-2148236857.jpg?w=1380&t=st=1682603942~exp=1682604542~hmac=f00b49a52ae3c1759c4de8e03b9c070389225ec8f99f40975d1c4d967c9a356b') no-repeat center center fixed; 
+    /* background: url('https://img.freepik.com/free-photo/top-view-desk-concept-with-laptop_23-2148236857.jpg?w=1380&t=st=1682603942~exp=1682604542~hmac=f00b49a52ae3c1759c4de8e03b9c070389225ec8f99f40975d1c4d967c9a356b') no-repeat center center fixed;  */
+    background: url('../img/background1.png') no-repeat center center fixed; 
     /* background-image: linear-gradient(to left, #c8ecff, #a2dafc, #7bc7f9, #51b4f7, #02a0f4); */
 
     -webkit-background-size: cover;
