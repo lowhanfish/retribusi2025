@@ -89,7 +89,6 @@ function isLoggedIn(to, from, next) {
     component: () => import('../views/dataMaster/jenisDagangan.vue'),
     beforeEnter: isLoggedIn,
   },
-  
 
   {
     path: '/about',

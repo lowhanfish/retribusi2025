@@ -33,51 +33,64 @@
                <table width="100%">
                   <tr class="h_table_head bg-purple-2">
                      <th width="5%" class="text-center">No</th>
-                     <th width="40%" class="text-center">Nama</th>
+                     <th width="10%" class="text-center">Status Akun</th>
+                     <th width="25%" class="text-center">Nama</th>
                      <th width="15%" class="text-center">Username</th>
-                     <th width="15%" class="text-center">Jadwal</th>
+                     <th width="20%" class="text-center">Alamat</th>
                      <th width="15%" class="text-center">Kontak</th>
                      <th width="10%"></th>
                   </tr>
 
                   <tr class="h_table_body" v-for="(data, index) in list_data" :key="data.id">
                      <td class="text-center">{{ indexing(index + 1) }}.</td>
-                     <td class="">
+                     <td class="text-center">
+                        <img v-if="data.verified == 0" src="img/alert.png" alt="" width="30">
+                        <img v-else src="img/approve.png" alt="" width="30">
+                     </td>
+                     <td>
                         <b>
                            {{ UMUM.namaLengkap(data.gelar_depan, data.nama, data.gelar_belakang) }}
                            ({{ data.retribusi }})<br />
-                           <span class="h_nip">NIP. {{ data.nip }}</span>
+                           <span class="h_nip">NIK. {{ data.nik }}</span>
                         </b>
                      </td>
                      <td>{{ data.username }}</td>
-                     <td class="text-center">{{ UMUM.jadwalAbsen(data.metode_absen) }}</td>
+                     <td>{{ data.alamat }}</td>
                      <td>
                         {{ data.email }} <br>
                         <span class="h_nip">Hp. {{ data.hp }}</span>
                      </td>
 
                      <td class="text-center">
-                        <q-btn-group>
-                           <q-btn @click="mdl_password = true, selectData(data)" glossy color="blue" icon="vpn_key"
-                              class="tbl_btn">
-                              <q-tooltip content-class="bg-blue-9" content-style="font-size: 13px">
-                                 Click untuk mengubah password pengguna ini
-                              </q-tooltip>
-                           </q-btn>
-                           <q-btn @click="mdl_edit = true, selectData(data)" glossy color="orange" icon="create"
-                              class="tbl_btn">
-                              <q-tooltip content-class="bg-orange-9" content-style="font-size: 13px">
-                                 Click untuk mengubah data ini
-                              </q-tooltip>
-                           </q-btn>
-                           <q-btn @click="mdl_hapus = true, selectData(data)" glossy color="negative"
-                              icon="delete_forever" class="tbl_btn">
-                              <q-tooltip content-class="bg-red" content-style="font-size: 13px">
-                                 Click untuk menghapus data ini
-                              </q-tooltip>
-                           </q-btn>
-                        </q-btn-group>
+                        <q-item-section>
+                           <div class="text-grey-8 q-gutter-xs text-center">
+                              <q-btn size="12px" flat dense round icon="settings">
+                                 <q-menu>
+                                    <q-list dense style="min-width: 100px">
+                                       <q-item clickable v-close-popup @click="mdl_akun = true, selectData(data)">
+                                          <q-item-section>Status Akun</q-item-section>
+                                       </q-item>
+                                       <q-separator />
+                                       <q-separator />
+                                       <q-item clickable v-close-popup @click="mdl_password = true, selectData(data)">
+                                          <q-item-section>Edit Password</q-item-section>
+                                       </q-item>
+                                       <q-separator />
+                                       <q-item clickable v-close-popup @click="mdl_edit = true, selectData(data)">
+                                          <q-item-section>Edit</q-item-section>
+                                       </q-item>
+                                       <q-separator />
+                                       <q-item clickable v-close-popup @click="mdl_hapus = true, selectData(data)">
+                                          <q-item-section>Hapus</q-item-section>
+                                       </q-item>
+                                       <q-separator />
 
+                                    </q-list>
+                                 </q-menu>
+                              </q-btn>
+
+                           </div>
+                        </q-item-section>
                      </td>
                   </tr>
 
@@ -330,6 +343,26 @@
       </q-dialog>
       <!-- ================================================= MODAL PASSWORD ================================================ -->
 
+      <!-- ================================================ MODAL HAPUS ================================================ -->
+      <q-dialog v-model="mdl_akun" persistent>
+         <q-card class="mdl-sm">
+            <q-card-section class="q-pt-none text-center biruSangatmudaGrad">
+               <br>
+               <img src="img/process.png" alt="" width="75"> <br>
+               <span class="h_notifikasi">PROSES DATA??</span>
+               <input type="submit" style="position: absolute; left: -9999px" />
+               <br> <br>
+
+               <q-btn type="submit" label="Diterima" size="sm" color="positive" @click="diterima()" />
+               &nbsp;
+               <q-btn type="submit" label="Ditolak" size="sm" color="warning" @click="ditolak()" />
+               <br> <br>
+               <q-btn label="batal" size="sm" color="red-7" v-close-popup />
+            </q-card-section>
+         </q-card>
+      </q-dialog>
+      <!-- ================================================ MODAL HAPUS ================================================ -->
+
 
       <!-- =================================================== MODAL =========================================================== -->
 
@@ -386,7 +419,7 @@ export default {
             password: '',
             confirmPassword: '',
             retribusi: 3,
-            file : null
+            file: null
          },
 
          filterku: {
@@ -424,6 +457,7 @@ export default {
          mdl_edit: false,
          mdl_hapus: false,
          mdl_password: false,
+         mdl_akun: false,
 
       }
    },
@@ -563,7 +597,6 @@ export default {
 
       },
 
-
       validUser: function () {
 
 
@@ -609,6 +642,14 @@ export default {
          this.dataku.metode_absen = data.metode_absen;
          // this.dataku.unit_kerja = data.unit_kerja;
 
+      },
+
+      diterima: function () {
+         console.log("diterima");
+      },
+
+      ditolak: function () {
+         console.log("ditolak");
       },
 
       // ====================================== PAGINATE ====================================

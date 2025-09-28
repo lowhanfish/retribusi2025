@@ -64,7 +64,7 @@ function sideMenuMidleware(req, res, next){
                JOIN menu
                ON menu_klp_list.menu_id = menu.id
 
-               WHERE menu_klp_list.menu_klp_id = `+parseInt(profile.absensi)+`
+               WHERE menu_klp_list.menu_klp_id = `+parseInt(profile.retribusi)+`
 
           `;
 
