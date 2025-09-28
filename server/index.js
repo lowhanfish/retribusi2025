@@ -44,6 +44,9 @@ app.use('/uploads', express.static(path.join(__dirname, './uploads')))
     
     // =================== SERVER =====================
 
+    const kecamatan = require('./apiMysql/dataMaster/kecamatan');
+    app.use('/api/v1/kecamatan', middleware.isLoggedIn, middleware.sideMenuMidleware, kecamatan);
+
     const dm_menuList = require('./apiMysql/dataMaster/authorization/menuList');
     app.use('/api/v1/dm_menuList', middleware.isLoggedIn, middleware.sideMenuMidleware, dm_menuList);
 
@@ -61,6 +64,9 @@ app.use('/uploads', express.static(path.join(__dirname, './uploads')))
 
     const dm_biodata = require('./apiMysql/dataMaster/biodata');
     app.use('/api/v1/dm_biodata', middleware.isLoggedIn, dm_biodata);
+
+    const masterPasar = require('./apiMysql/dataMaster/masterPasar');
+    app.use('/api/v1/masterPasar', middleware.isLoggedIn, masterPasar);
 
     const regisLapak = require('./apiMysql/dataMaster/regisLapak');
     app.use('/api/v1/regisLapak', middleware.isLoggedIn, regisLapak);

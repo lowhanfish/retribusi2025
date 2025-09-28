@@ -72,6 +72,12 @@ function isLoggedIn(to, from, next) {
   },
 
   {
+    path: '/masterPasar',
+    name: 'masterPasar',
+    component: () => import('../views/dataMaster/masterPasar.vue'),
+    beforeEnter: isLoggedIn,
+  },
+  {
     path: '/regisLapak',
     name: 'regisLapak',
     component: () => import('../views/dataMaster/regisLapak.vue'),
@@ -89,6 +95,15 @@ function isLoggedIn(to, from, next) {
     component: () => import('../views/dataMaster/jenisDagangan.vue'),
     beforeEnter: isLoggedIn,
   },
+
+
+  {
+    path: '/lapak',
+    name: 'lapak',
+    component: () => import('../views/lapak.vue'),
+    beforeEnter: isLoggedIn,
+  },
+  
 
   {
     path: '/about',

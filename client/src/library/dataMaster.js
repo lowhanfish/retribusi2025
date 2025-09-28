@@ -173,6 +173,23 @@ const getBiodata = (sub_unit_kerja) => {
   });
 }
 
+const getKecamatan = () => {
+  fetch(store.state.url.URL_DM_KECAMATAN + "list", {
+      method : 'POST',
+      headers : {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+      },
+      body : JSON.stringify({
+        
+
+      })
+  }).then((res) => res.json()).then((res_data) => {
+    store.state.list_kecamatan = res_data
+    // console.log(res_data)
+  })
+}
+
 
 
 
@@ -188,5 +205,7 @@ module.exports = {
   getInstansi : getInstansi,
   getUnitKerja : getUnitKerja,
   getBiodata : getBiodata,
+
+  getKecamatan: getKecamatan,
 
 }

@@ -30,18 +30,15 @@ export default new Vuex.Store({
       URL_DM_REGISTER : URL+'api/v1/dm_registrasi/',
       URL_DM_MENU : URL+'api/v1/dm_menuList/',
       URL_DM_KLP_USERS : URL+'api/v1/dm_kelompokUsers/',
-      
+      URL_DM_KECAMATAN : URL + 'api/v1/kecamatan/',
       URL_DM_REGISTER_LAPAK : URL+'api/v1/regisLapak/',
+      URL_DM_PASAR : URL+'api/v1/masterPasar/',
       URL_DM_JNS_LAPAK : URL+'api/v1/jenisLapak/',
       URL_DM_JNS_DAGANGAN : URL+'api/v1/jenisDagangan/',
       checkAuth : URL + 'api/v1/checkAuth/',
     },
 
-    // ====================================== CONTOH AUTOCOMPLETE ====================================
-    list_contoh_autocomplete : [],
-    list_unit_kerja: [],
-    list_instansi: [],
-    // ====================================== CONTOH AUTOCOMPLETE ====================================
+    list_kecamatan: [],
 
     list_menu : null,
     aksesMenu : {},
