@@ -35,10 +35,15 @@ export default new Vuex.Store({
       URL_DM_PASAR : URL+'api/v1/masterPasar/',
       URL_DM_JNS_LAPAK : URL+'api/v1/jenisLapak/',
       URL_DM_JNS_DAGANGAN : URL+'api/v1/jenisDagangan/',
+
+      URL_LAPAK : URL+'api/v1/lapak/',
       checkAuth : URL + 'api/v1/checkAuth/',
     },
 
     list_kecamatan: [],
+    list_pasar: [],
+    list_jns_lapak: [],
+    list_jns_dagangan: [],
 
     list_menu : null,
     aksesMenu : {},
@@ -101,9 +106,9 @@ export default new Vuex.Store({
 
       Loading.show({
         spinner,
-        spinnerColor: 'yellow',
+        spinnerColor: 'purple',
         spinnerSize: 140,
-        backgroundColor: 'purple',
+        backgroundColor: 'purple-4',
         // message: 'Loading... Tunggu beberapa saat, system sedang menyesuaikan akun anda..!',
         // messageColor: 'white'
       })

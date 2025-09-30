@@ -18,10 +18,10 @@
           <div class="col-12 col-md-3 frWidget ">
             <div class="row shadow-5 frWidgetSub">
               <div class="col-4 frWidgetSub1 text-center main1x  row items-center justify-center">
-                <q-icon class="vertical-middle" name="check_circle_outline" style="font-size:420%; color:white" />
+                <q-icon class="vertical-middle" name="storefront" style="font-size:420%; color:white" />
               </div>
               <div class="col-8 frWidgetSub2 main1">
-                <span class="frWidgetText1">Hadir</span> <br>
+                <span class="frWidgetText1">Lapak</span> <br>
                 <span class="frWidgetText2">25</span>
               </div>
             </div>
@@ -40,24 +40,24 @@
 
           <div class="col-12 col-md-3 frWidget">
             <div class="row shadow-5 frWidgetSub">
-              <div class="col-4 frWidgetSub1 text-center main6x  row items-center justify-center">
-                <q-icon name="error_outline" style="font-size:420%; color:#646464" />
+              <div class="col-4 frWidgetSub1 text-center main3x  row items-center justify-center">
+                <q-icon name="error_outline" style="font-size:420%; color:white" />
               </div>
-              <div class="col-8 frWidgetSub2 main6">
-                <span class="frWidgetText1Dark">Izin</span> <br>
-                <span class="frWidgetText2Dark">12</span>
+              <div class="col-8 frWidgetSub2 main3">
+                <span class="frWidgetText1">Izin</span> <br>
+                <span class="frWidgetText2">12</span>
               </div>
             </div>
           </div>
 
           <div class="col-12 col-md-3 frWidget">
             <div class="row shadow-5 frWidgetSub">
-              <div class="col-4 frWidgetSub1 text-center main3x  row items-center justify-center">
-                <q-icon name="error_outline" style="font-size:420%; color:#646464" />
+              <div class="col-4 frWidgetSub1 text-center main4x  row items-center justify-center">
+                <q-icon name="error_outline" style="font-size:420%; color:white" />
               </div>
-              <div class="col-8 frWidgetSub2 main3">
-                <span class="frWidgetText1Dark">Izin</span> <br>
-                <span class="frWidgetText2Dark">12</span>
+              <div class="col-8 frWidgetSub2 main4">
+                <span class="frWidgetText1">Izin</span> <br>
+                <span class="frWidgetText2">12</span>
               </div>
             </div>
           </div>

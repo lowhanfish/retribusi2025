@@ -199,35 +199,6 @@
                <div class="row">
 
                   <div class="col-12 col-md-12 frame_cari">
-
-                     <span class="h_lable ">Unit Kerja</span>
-                     <model-list-select :list="$store.state.list_instansi" outlined square :dense="true"
-                        class="inputbs inputfilter margin_btn bg-white" v-model="filterku.instansi" option-value="id"
-                        option-text="instansi" @input="DATA_MASTER.getUnitKerja(filterku.instansi)"
-                        placeholder="Pilih Instansi">
-                     </model-list-select>
-
-                  </div>
-
-                  <div class="col-12 col-md-12 frame_cari">
-
-                     <span class="h_lable ">Sub Unit kerja</span>
-                     <model-list-select :list="$store.state.list_unit_kerja" outlined square :dense="true"
-                        class="inputbs inputfilter margin_btn bg-white" v-model="dataku.unit_kerja" option-value="id"
-                        option-text="unit_kerja" @input="DATA_MASTER.getBiodata(dataku.unit_kerja)"
-                        placeholder="Pilih Instansi">
-                     </model-list-select>
-                  </div>
-
-                  <div class="col-12 col-md-12 frame_cari">
-                     <span class="h_lable ">Nama ASN</span>
-                     <model-list-select :list="$store.state.list_biodata" outlined square :dense="true"
-                        class="inputbs inputfilter margin_btn bg-white" v-model="dataku.nip" option-value="nip"
-                        :custom-text="selectBiodata" placeholder="Pilih ASN">
-                     </model-list-select>
-                  </div>
-
-                  <div class="col-12 col-md-12 frame_cari">
                      <span class="h_lable ">Klp Pengguna</span>
                      <select v-model="dataku.retribusi" class="bg-white">
                         <option v-for="data in list_klp" :value="data.id" :key="data.id">{{ data.uraian }} </option>
@@ -702,7 +673,7 @@ export default {
       // DATA_MASTER.getUnitKerja(this.filterku.instansi);
       // DATA_MASTER.getBiodata(this.dataku.unit_kerja);
 
-      // this.getAsyncPost()
+      this.getAsyncPost()
 
       this.getView();
 

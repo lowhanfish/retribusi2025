@@ -165,7 +165,7 @@ router.post('/editData', (req, res) => {
    var query = `
         UPDATE users SET
 
-        menu_klp = `+ req.body.menu_klp + `,
+        retribusi = `+ req.body.retribusi + `,
         nama = '`+ req.body.nama + `',
         username = '`+ req.body.username + `',
         email = '`+ req.body.email + `',

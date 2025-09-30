@@ -190,6 +190,57 @@ const getKecamatan = () => {
   })
 }
 
+const getPasar = () => {
+  fetch(store.state.url.URL_DM_PASAR + "list", {
+      method : 'POST',
+      headers : {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+      },
+      body : JSON.stringify({
+        
+
+      })
+  }).then((res) => res.json()).then((res_data) => {
+    store.state.list_pasar = res_data
+    // console.log(res_data)
+  })
+}
+
+const getJnsLapak = () => {
+  fetch(store.state.url.URL_DM_JNS_LAPAK + "list", {
+      method : 'POST',
+      headers : {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+      },
+      body : JSON.stringify({
+        
+
+      })
+  }).then((res) => res.json()).then((res_data) => {
+    store.state.list_jns_lapak = res_data
+    // console.log(res_data)
+  })
+}
+
+const getJnsDagangan = () => {
+  fetch(store.state.url.URL_DM_JNS_DAGANGAN + "list", {
+      method : 'POST',
+      headers : {
+        "content-type": "application/json",
+        authorization: "kikensbatara " + localStorage.token
+      },
+      body : JSON.stringify({
+        
+
+      })
+  }).then((res) => res.json()).then((res_data) => {
+    store.state.list_jns_dagangan = res_data
+    // console.log(res_data)
+  })
+}
+
 
 
 
@@ -207,5 +258,8 @@ module.exports = {
   getBiodata : getBiodata,
 
   getKecamatan: getKecamatan,
+  getPasar: getPasar,
+  getJnsLapak: getJnsLapak,
+  getJnsDagangan: getJnsDagangan,
 
 }

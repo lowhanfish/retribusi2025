@@ -137,3 +137,5 @@ dist
 
 # ignore ds_store file from mac
 .DS_Store
+
+uploads/
