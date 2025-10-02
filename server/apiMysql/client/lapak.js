@@ -28,11 +28,11 @@ router.post('/view', (req, res) => {
 
    var filterView = ``;
 
-   if (userku.retribusi == '1' || userku.retribusi == 1 ) {
-        filterView = ` lapak.createdBy LIKE '%%' `
-    } else {
-        filterView = ` lapak.createdBy = '`+req.user._id+`' `
-    }
+   if (userku.retribusi == '1' || userku.retribusi == 1) {
+      filterView = ` lapak.createdBy LIKE '%%' `
+   } else {
+      filterView = ` lapak.createdBy = '` + req.user._id + `' `
+   }
 
    let jml_data = ` 
         SELECT
@@ -76,7 +76,7 @@ router.post('/view', (req, res) => {
          LEFT JOIN master_pasar
          ON lapak.pasar_id = master_pasar.id
 
-         WHERE `+filterView+`
+         WHERE `+ filterView + `
          AND lapak.nama LIKE '%`+ cari + `%'
 
          ORDER BY lapak.createdAt DESC
@@ -145,45 +145,57 @@ router.post('/addData', upload.single('file'), (req, res) => {
 });
 
 router.post('/editData', upload.single("file"), (req, res) => {
-   // console.log(req.body);
+   var data = JSON.parse(req.body.data)
+   // console.log(data);
+
+   function formatDateToMySQL(dateString) {
+      if (!dateString) return null;
+      const date = new Date(dateString);
+      return date.toISOString().slice(0, 19).replace('T', ' ');
+   }
+
+   const tglMulai = formatDateToMySQL(data.tgl_mulai);
+   const tglAkhir = formatDateToMySQL(data.tgl_akhir);
+
+
    var query = '';
    if (req.file == undefined || req.file == null) {
       query = `
             UPDATE lapak SET
-            nama = '`+ req.body.nik + `',
-            pasar_id = '`+ req.body.tmp_lahir + `',
-            jns_lapak_id = '`+ req.body.tgl_lahir + `',
-            ukuran_lapak = '`+ req.body.jns_kelamin + `',
-            jns_dagangan_id = '`+ req.body.alamat + `',
-            no_blok = '`+ req.body.dusun + `',
-            status = '`+ req.body.rt_rw + `',
-            tgl_mulai = '`+ req.body.kecamatan_id + `',
-            tgl_akhir = '`+ req.body.kode_pos + `',
+            nama = '`+ data.nama + `',
+            pasar_id = '`+ data.pasar_id + `',
+            jns_lapak_id = '`+ data.jns_lapak_id + `',
+            ukuran_lapak = '`+ data.ukuran_lapak + `',
+            jns_dagangan_id = '`+ data.jns_dagangan_id + `',
+            no_blok = '`+ data.no_blok + `',
+            status = '`+ data.status + `',
+            tgl_mulai = ${tglMulai ? `'${tglMulai}'` : 'NULL'},
+            tgl_akhir = ${tglAkhir ? `'${tglAkhir}'` : 'NULL'},
             editeBy = '`+ req.user._id + `',
             editeAt = NOW()
 
-            WHERE id = '`+ req.body.id + `'
+            WHERE id = '`+ data.id + `'
         `;
    } else {
       query = `
             UPDATE lapak SET
-            nama = '`+ req.body.nik + `',
-            pasar_id = '`+ req.body.tmp_lahir + `',
-            jns_lapak_id = '`+ req.body.tgl_lahir + `',
-            ukuran_lapak = '`+ req.body.jns_kelamin + `',
-            jns_dagangan_id = '`+ req.body.alamat + `',
-            no_blok = '`+ req.body.dusun + `',
-            status = '`+ req.body.rt_rw + `',
-            tgl_mulai = '`+ req.body.kecamatan_id + `',
-            tgl_akhir = '`+ req.body.kode_pos + `',
+            nama = '`+ data.nama + `',
+            pasar_id = '`+ data.pasar_id + `',
+            jns_lapak_id = '`+ data.jns_lapak_id + `',
+            ukuran_lapak = '`+ data.ukuran_lapak + `',
+            jns_dagangan_id = '`+ data.jns_dagangan_id + `',
+            no_blok = '`+ data.no_blok + `',
+            status = '`+ data.status + `',
+            tgl_mulai = ${tglMulai ? `'${tglMulai}'` : 'NULL'},
+            tgl_akhir = ${tglAkhir ? `'${tglAkhir}'` : 'NULL'},
             file = '`+ req.file.filename + `',
             file_type = '`+ req.file.mimetype + `',
             editeBy = '`+ req.user._id + `',
             editeAt = NOW()
 
-            WHERE id = '`+ req.body.id + `' 
+            WHERE id = '`+ data.id + `' 
         `;
-      hapus_file(req.body.file_old);
+      // hapus_file(req.body.file_old);
    }
 
    db.query(query, (err, row) => {
