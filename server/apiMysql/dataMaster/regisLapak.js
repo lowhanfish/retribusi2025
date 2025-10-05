@@ -23,6 +23,17 @@ router.post('/view', (req, res) => {
    var cari = req.body.cari_value;
    var halaman = 1;
 
+   var userku = req.user.profile
+   console.log(userku);
+
+   var filterView = ``;
+
+   if (userku.retribusi == '1' || userku.retribusi == 1) {
+      filterView = ` lapak.createdBy LIKE '%%' `
+   } else {
+      filterView = ` lapak.createdBy = '` + req.user._id + `' `
+   }
+
    let jml_data = ` 
         SELECT * FROM users
         ORDER BY nama ASC
