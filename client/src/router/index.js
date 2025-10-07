@@ -95,6 +95,12 @@ function isLoggedIn(to, from, next) {
     component: () => import('../views/dataMaster/jenisDagangan.vue'),
     beforeEnter: isLoggedIn,
   },
+  {
+    path: '/besaranTarif',
+    name: 'besaranTarif',
+    component: () => import('../views/dataMaster/besaranTarif.vue'),
+    beforeEnter: isLoggedIn,
+  },
 
 
   {

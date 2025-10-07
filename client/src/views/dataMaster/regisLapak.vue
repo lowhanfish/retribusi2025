@@ -349,7 +349,6 @@
 import { ModelSelect, ModelListSelect } from 'vue-search-select'
 import 'vue-search-select/dist/VueSearchSelect.css'
 
-// import UMUM from         '../../library/umum.js'
 import UMUM from '../../library/umum'
 import DATA_MASTER from '../../library/dataMaster'
 import FETCHING from '../../library/fetching'

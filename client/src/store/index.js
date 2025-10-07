@@ -35,6 +35,7 @@ export default new Vuex.Store({
       URL_DM_PASAR : URL+'api/v1/masterPasar/',
       URL_DM_JNS_LAPAK : URL+'api/v1/jenisLapak/',
       URL_DM_JNS_DAGANGAN : URL+'api/v1/jenisDagangan/',
+      URL_DM_BESARAN_TARIF : URL+'api/v1/besaranTarif/',
 
       URL_LAPAK : URL+'api/v1/lapak/',
       checkAuth : URL + 'api/v1/checkAuth/',

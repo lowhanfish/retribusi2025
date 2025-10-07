@@ -554,6 +554,7 @@ export default {
 			this.form.nama = data.nama;
 			this.form.pasar_id = data.pasar_id;
 			this.form.jns_lapak_id = data.jns_lapak_id;
+			this.form.jns_dagangan_id = data.jns_dagangan_id;
 			this.form.ukuran_lapak = data.ukuran_lapak;
 			this.form.no_blok = data.no_blok;
 			this.form.status = data.status;
