@@ -77,6 +77,9 @@ app.use('/uploads', express.static(path.join(__dirname, './uploads')))
    const jenisDagangan = require('./apiMysql/dataMaster/jenisDagangan');
    app.use('/api/v1/jenisDagangan', middleware.isLoggedIn, jenisDagangan);
 
+   const besaranTarif = require('./apiMysql/dataMaster/besaranTarif');
+   app.use('/api/v1/besaranTarif', middleware.isLoggedIn, besaranTarif);
+
 
 
    const checkAuth = require('./apiMysql/checkAuth');

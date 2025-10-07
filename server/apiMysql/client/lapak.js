@@ -44,6 +44,9 @@ router.post('/view', (req, res) => {
       SELECT
          lapak.id,
          lapak.nama,
+         lapak.jns_dagangan_id,
+         lapak.jns_lapak_id,
+         lapak.pasar_id,
          lapak.ukuran_lapak,
          lapak.no_blok,
          lapak.status,

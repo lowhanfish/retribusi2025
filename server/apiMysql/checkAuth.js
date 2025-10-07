@@ -5,13 +5,13 @@ var db = require('../db/MySql/umum');
 
 
 router.post('/', (req, res)=>{
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA")
+    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA")
     res.send("OK")
 
 })
 
 router.get('/', (req, res)=>{
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA")
+    // console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA")
     res.json("OK")
 
 })
