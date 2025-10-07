@@ -29,13 +29,15 @@ router.post('/view', (req, res) => {
    var filterView = ``;
 
    if (userku.retribusi == '1' || userku.retribusi == 1) {
-      filterView = ` lapak.createdBy LIKE '%%' `
+      filterView = ` 1=1 `
    } else {
-      filterView = ` lapak.createdBy = '` + req.user._id + `' `
+      filterView = ` users.id = '` + req.user._id + `' `
    }
 
    let jml_data = ` 
-        SELECT * FROM users
+        SELECT users.id
+        FROM users
+        WHERE `+ filterView + `
         ORDER BY nama ASC
     `;
 
@@ -50,7 +52,8 @@ router.post('/view', (req, res) => {
         LEFT JOIN menu_klp
         ON menu_klp.id = users.retribusi
 
-        WHERE users.nama LIKE '%`+ cari + `%'
+        WHERE `+ filterView + `
+        AND users.nama LIKE '%`+ cari + `%'
 	
         ORDER BY createdAt DESC
 
