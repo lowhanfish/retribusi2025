@@ -11,7 +11,15 @@
                   <div class="row">
                      <q-input v-model="cari_value" @keyup="cari_data()" outlined square :dense="true" class="bg-white"
                         style="width:90%" />
-                     <q-btn glossy class="bg-yellow-9" @click="mdl_add = true" dense flat icon="add" style="width:10%">
+                     <q-btn v-if="retribusix === 1 || retribusix === '1'" glossy class="bg-yellow-9"
+                        @click="mdl_add = true" dense flat icon="add" style="width:10%">
+                        <q-tooltip content-class="bg-yellow-9" content-style="font-size: 13px">
+                           Click untuk menambah data
+                        </q-tooltip>
+                     </q-btn>
+
+                     <q-btn v-else glossy class="bg-yellow-9" @click="mdl_add = true" dense flat icon="add"
+                        style="width:10%" disabled>
                         <q-tooltip content-class="bg-yellow-9" content-style="font-size: 13px">
                            Click untuk menambah data
                         </q-tooltip>
@@ -67,10 +75,11 @@
                               <q-btn size="12px" flat dense round icon="settings">
                                  <q-menu>
                                     <q-list dense style="min-width: 100px">
-                                       <q-item clickable v-close-popup @click="mdl_akun = true, selectData(data)">
+
+                                       <q-item v-if="retribusix === 1 || retribusix === '1'" clickable v-close-popup @click="mdl_akun = true, selectData(data)">
                                           <q-item-section>Status Akun</q-item-section>
                                        </q-item>
-                                       <q-separator />
+
                                        <q-separator />
                                        <q-item clickable v-close-popup @click="mdl_password = true, selectData(data)">
                                           <q-item-section>Edit Password</q-item-section>
@@ -197,44 +206,40 @@
             <q-card-section class="q-pt-none">
                <br>
                <div class="row">
-
                   <div class="col-12 col-md-12 frame_cari">
-                     <span class="h_lable ">Klp Pengguna</span>
-                     <select v-model="dataku.retribusi" class="bg-white">
-                        <option v-for="data in list_klp" :value="data.id" :key="data.id">{{ data.uraian }} </option>
-                     </select>
+                     <span class="h_lable ">Nama Lengkap</span>
+                     <q-input v-model="dataku.nama" outlined square :dense="true" class="bg-white margin_btn" />
                   </div>
-
                   <div class="col-12 col-md-12 frame_cari">
-                     <span class="h_lable ">Username</span>
-                     <q-input v-model="dataku.username" outlined square :dense="true" class="bg-white margin_btn" />
+                     <span class="h_lable ">NIK</span>
+                     <q-input v-model="dataku.nik" outlined square :dense="true" class="bg-white margin_btn" />
                   </div>
-
+                  <div class="col-12 col-md-12 frame_cari">
+                     <span class="h_lable ">Alamat</span>
+                     <q-input type="textarea" v-model="dataku.alamat" outlined square :dense="true"
+                        class="bg-white margin_btn" />
+                  </div>
                   <div class="col-12 col-md-6 frame_cari">
                      <span class="h_lable ">Hp</span>
                      <q-input v-model="dataku.hp" outlined square :dense="true" class="bg-white margin_btn" />
                   </div>
-
                   <div class="col-12 col-md-6 frame_cari">
                      <span class="h_lable ">e-mail</span>
                      <q-input v-model="dataku.email" outlined square :dense="true" class="bg-white margin_btn" />
                   </div>
-
+                  <div class="col-12 col-md-12 frame_cari frame_cari">
+                     <span class="h_lable ">Foto KTP</span>
+                     <q-file v-model="dataku.file_old" outlined square :dense="true" class="bg-white margin_btn">
+                        <template v-slot:prepend>
+                           <q-icon name="attach_file" />
+                        </template>
+                     </q-file>
+                  </div>
                   <div class="col-12 col-md-12 frame_cari">
                      <div class="bg-red text-center" v-if="errorMessage" style="padding:2%">
                         <span style="color:white">{{ errorMessage }}</span>
                      </div>
                   </div>
-
-                  <div class="col-12 col-md-12 frame_cari">
-                     <span class="h_lable ">Jadwal Absen</span>
-                     <select v-model="dataku.metode_absen" class="bg-white">
-                        <option value="1">[1] Senin - Jum'at</option>
-                        <option value="2">[2] Senin - Sabtu</option>
-                        <option value="3">[3] Hari tertentu</option>
-                     </select>
-                  </div>
-
                </div>
 
             </q-card-section>
@@ -389,7 +394,8 @@ export default {
             password: '',
             confirmPassword: '',
             retribusi: 3,
-            file: null
+            file: null,
+            file_old: '',
          },
 
          filterku: {
@@ -429,6 +435,9 @@ export default {
          mdl_password: false,
          mdl_akun: false,
 
+         retribusix: '',
+         file_old: '',
+
       }
    },
    methods: {
@@ -453,7 +462,7 @@ export default {
                this.list_data = res_data.data;
                this.page_last = res_data.jml_data;
                this.$store.commit("hideLoading");
-               console.log(res_data);
+               // console.log(res_data);
             });
       },
 
@@ -504,23 +513,29 @@ export default {
       },
 
       editData: function () {
+         // fetch(this.$store.state.url.URL_DM_REGISTER_LAPAK + "editData", {
+         //    method: "POST",
+         //    headers: {
+         //       'content-type': 'application/json',
+         //       authorization: "kikensbatara " + localStorage.token
+         //    },
+         //    body: JSON.stringify(this.dataku)
+         // }).then(res_data => {
+         //    this.Notify('Sukses Mengubah Data', 'primary', 'check_circle_outline');
+         //    this.getView();
+         // });
+
+         var formData = new FormData();
+         formData.append('data', JSON.stringify(this.dataku))
+         formData.append('file', this.dataku.file)
+
          fetch(this.$store.state.url.URL_DM_REGISTER_LAPAK + "editData", {
             method: "POST",
             headers: {
-               'content-type': 'application/json',
+               // 'content-type': 'application/json',
                authorization: "kikensbatara " + localStorage.token
             },
-            body: JSON.stringify({
-               id: this.dataku.id,
-               retribusi: this.dataku.retribusi,
-               nama: this.dataku.nama,
-               username: this.dataku.username,
-               email: this.dataku.email,
-               hp: this.dataku.hp,
-               unit_kerja: this.dataku.unit_kerja,
-               metode_absen: this.dataku.metode_absen,
-               nip: this.dataku.nip,
-            })
+            body: formData
          }).then(res_data => {
             this.Notify('Sukses Mengubah Data', 'primary', 'check_circle_outline');
             this.getView();
@@ -603,15 +618,15 @@ export default {
       selectData: function (data) {
          console.log(data)
          this.dataku.id = data.id;
-         this.dataku.username = data.username;
+         this.dataku.alamat = data.alamat;
          this.dataku.nama = data.nama;
-         this.dataku.nip = data.nip;
+         this.dataku.nik = data.nik;
          this.dataku.hp = data.hp;
          this.dataku.email = data.email;
          this.dataku.retribusi = data.retribusi;
-         this.dataku.metode_absen = data.metode_absen;
-         // this.dataku.unit_kerja = data.unit_kerja;
-
+         this.dataku.username = data.username;
+         this.dataku.file = data.file;
+         this.file_old = data.file;
       },
 
       diterima: function () {
@@ -661,7 +676,9 @@ export default {
 
    mounted() {
 
-      // var get_profile = JSON.parse(localStorage.profile);
+      var get_profile = JSON.parse(localStorage.profile);
+
+      this.retribusix = get_profile.profile.retribusi
       // this.filterku.unit_kerja = get_profile.profile.unit_kerja;
       // this.filterku.instansi = get_profile.profile.instansi_id;
       // this.unit_kerja_full = get_profile.profile.unit_kerja_nama;
