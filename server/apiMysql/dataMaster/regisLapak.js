@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 var uniqid = require('uniqid');
 var db = require('../../db/MySql/umum');
 var upload = require('../../db/multer/pdf');
+const fs = require('fs');
 
 
 
@@ -24,7 +25,7 @@ router.post('/view', (req, res) => {
    var halaman = 1;
 
    var userku = req.user.profile
-   console.log(userku);
+   // console.log(userku);
 
    var filterView = ``;
 
@@ -172,31 +173,55 @@ router.post('/signup', (req, res, next) => {
 
 
 
-router.post('/editData', (req, res) => {
+router.post('/editData', upload.single("file"), (req, res) => {
 
-   console.log(req.body)
-   console.log("ASSSSSSSSSSSSSSSUU")
-   var query = `
-        UPDATE users SET
+   var data = JSON.parse(req.body.data)
+   console.log(data);
 
-        retribusi = `+ req.body.retribusi + `,
-        nama = '`+ req.body.nama + `',
-        username = '`+ req.body.username + `',
-        email = '`+ req.body.email + `',
-        hp = '`+ req.body.hp + `'
+   console.log(data.file);
 
-        WHERE id = '`+ req.body.id + `'
-    `
+   var query = '';
+   if (req.file == undefined || req.file == null) {
+      query = `
+            UPDATE users SET
+            nama = '`+ data.nama + `',
+            nik = '`+ data.nik + `',
+            alamat = '`+ data.alamat + `',
+            email = '`+ data.email + `',
+            hp = '`+ data.hp + `',
+            editeBy = '`+ req.user._id + `',
+            editeAt = NOW()
 
+            WHERE id = '`+ data.id + `'
+        `;
+   } else {
+      query = `
+            UPDATE users SET
+            nama = '`+ data.nama + `',
+            nik = '`+ data.nik + `',
+            alamat = '`+ data.alamat + `',
+            email = '`+ data.email + `',
+            hp = '`+ data.hp + `',
+            file = '`+ req.file.filename + `',
+            editeBy = '`+ req.user._id + `',
+            editeAt = NOW()
+
+            WHERE id = '`+ data.id + `' 
+        `;
+
+      hapus_file(data.file);
+   }
+   
    db.query(query, (err, row) => {
       if (err) {
          console.log(err);
          res.send(err);
       } else {
-         console.log('Sukses mengubah data');
+         console.log("SUKSES MERUBAH DATA")
          res.send(row);
       }
    })
+
 
 
 })
@@ -234,17 +259,18 @@ router.post('/editDataPass', (req, res) => {
 
 
 router.post('/removeData', (req, res) => {
-   console.log(req.body)
+
    var query = `
         DELETE FROM users WHERE id = '`+ req.body.id + `';
     `;
 
    db.query(query, (err, row) => {
       if (err) {
-         console.log(er)
+         console.log(err)
          res.send(err);
       } else {
-
+         hapus_file(req.body.file)
+         console.log('SUKSESSSSSS MENGHAPUS DATA & LAMPIRAN')
          res.send(row);
       }
    });
@@ -259,6 +285,16 @@ const schema = Joi.object().keys({
    password: Joi.string().min(6).required(),
 });
 
+function hapus_file(file) {
+   const path = 'uploads/' + file;
+
+   fs.unlink(path, (err) => {
+      if (err) {
+         console.error(err)
+         return
+      }
+   })
+}
 
 
 module.exports = router;
